@@ -7,6 +7,7 @@ import java.awt.Point;
 import java.util.Optional;
 
 import aiPlayerStages.Decisioner;
+import aiPlayerStages.ExpertPlayer;
 import aiPlayerStages.RandomPlayer;
 import aiPlayerStages.ThreeInARowPlayer;
 import playingField.PlayingField;
@@ -44,7 +45,11 @@ public class AIplayer extends Player {
 		
 		Decisioner decisioner = new Decisioner();
 		
-		ThreeInARowPlayer.findFinishingPosition(field, myPlayerID, decisioner);
+		ExpertPlayer.useKnowlegdeToFindPosition(field, decisioner);
+		
+		if(decisioner.areTherePossibilities() == false) {
+			ThreeInARowPlayer.findFinishingPosition(field, myPlayerID, decisioner);
+		}
 		
 		if(decisioner.areTherePossibilities() == false) {
 			ThreeInARowPlayer.spikeFinishingPosition(field, myPlayerID, decisioner);

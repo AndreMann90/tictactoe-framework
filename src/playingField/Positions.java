@@ -1,6 +1,7 @@
 package playingField;
 
 import java.awt.Point;
+import java.util.Random;
 
 public class Positions {
 	
@@ -81,5 +82,17 @@ public class Positions {
 	
 	public static FieldPosition opposite (final FieldPosition from) {
 		return rotateRight(from, 4);
+	}
+	
+	public static FieldPosition randomCorner(Random r) {
+		if(r == null) {
+			r = new Random();
+		}
+		final int corner = r.nextInt(4) * 2;
+		return FieldPosition.fromInt(corner);		
+	}
+	
+	public static FieldPosition randomCorner() {
+		return randomCorner(new Random());	
 	}
 }

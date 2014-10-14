@@ -67,7 +67,7 @@ public class PlayingField {
 		if(round > this.round || round < 1) {
 			return FieldPosition.Empty;
 		}
-		return history[round];
+		return history[round-1];
 	}
 	
 	public void makeMove(Point ppos, FieldPosition fpos, PlayerID id) throws InvalidMoveException {
