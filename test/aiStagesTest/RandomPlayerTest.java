@@ -27,7 +27,7 @@ public class RandomPlayerTest {
 		assertTrue("Full Field", success);
 		
 		success = TestDriver.likeExpected(
-				  "xox"
+				  "oox"
 				+ "oxo"
 				+ "xxe", 
 				(field, dec) -> RandomPlayer.determineRandomPosition(field, dec));		

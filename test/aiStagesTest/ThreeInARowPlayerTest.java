@@ -43,20 +43,20 @@ public class ThreeInARowPlayerTest {
 		System.out.println("testFindFinishingPositionBottomRow");
 		boolean success = TestDriver.likeExpected(
 				  "xxo"
-				+ "oo-"
+				+ "ooo"
 				+ "xex", 
 				(field, dec) -> ThreeInARowPlayer.findFinishingPosition(field, PlayerID.Player1, dec));		
 		assertTrue("Part 1", success);
 		
 		success = TestDriver.likeExpected(
-				  "xxo"
+				  "x-o"
 				+ "oo-"
 				+ "exx", 
 				(field, dec) -> ThreeInARowPlayer.findFinishingPosition(field, PlayerID.Player1, dec));		
 		assertTrue("Part 2", success);
 		
 		success = TestDriver.likeExpected(
-				  "xox"
+				  "-ox"
 				+ "oo-"
 				+ "xxe", 
 				(field, dec) -> ThreeInARowPlayer.findFinishingPosition(field, PlayerID.Player1, dec));		
@@ -67,14 +67,14 @@ public class ThreeInARowPlayerTest {
 	public void testFindFinishingPositionLeftRow() throws InvalidSyntaxException {
 		System.out.println("testFindFinishingPositionLeftRow");
 		boolean success = TestDriver.likeExpected(
-				  "xxo"
+				  "x-o"
 				+ "eo-"
 				+ "xox", 
 				(field, dec) -> ThreeInARowPlayer.findFinishingPosition(field, PlayerID.Player1, dec));		
 		assertTrue("Part 1", success);
 		
 		success = TestDriver.likeExpected(
-				  "xxo"
+				  "x-o"
 				+ "xo-"
 				+ "eox", 
 				(field, dec) -> ThreeInARowPlayer.findFinishingPosition(field, PlayerID.Player1, dec));		
@@ -82,8 +82,8 @@ public class ThreeInARowPlayerTest {
 		
 		success = TestDriver.likeExpected(
 				  "exo"
-				+ "x--"
-				+ "xox", 
+				+ "xo-"
+				+ "xo-", 
 				(field, dec) -> ThreeInARowPlayer.findFinishingPosition(field, PlayerID.Player1, dec));		
 		assertTrue("Part 3", success);
 	}
@@ -106,7 +106,7 @@ public class ThreeInARowPlayerTest {
 		assertTrue("Part 2", success);
 		
 		success = TestDriver.likeExpected(
-				  "o-x"
+				  "--x"
 				+ "xox"
 				+ "ooe", 
 				(field, dec) -> ThreeInARowPlayer.findFinishingPosition(field, PlayerID.Player1, dec));		
@@ -176,12 +176,12 @@ public class ThreeInARowPlayerTest {
 		success = TestDriver.likeExpected(
 				  "-xo"
 				+ "-x-"
-				+ "oeo",
+				+ "-eo",
 				(field, dec) -> ThreeInARowPlayer.findFinishingPosition(field, PlayerID.Player1, dec));		
 		assertTrue("Part 2", success);
 		
 		success = TestDriver.likeExpected(
-				  "oeo"
+				  "-eo"
 				+ "-x-"
 				+ "ox-", 
 				(field, dec) -> ThreeInARowPlayer.findFinishingPosition(field, PlayerID.Player1, dec));		
@@ -194,19 +194,19 @@ public class ThreeInARowPlayerTest {
 		boolean success = TestDriver.likeExpected(
 				  "-o-"
 				+ "xex"
-				+ "-oo", 
+				+ "-o-", 
 				(field, dec) -> ThreeInARowPlayer.findFinishingPosition(field, PlayerID.Player1, dec));		
 		assertTrue("Part 1", success);
 		
 		success = TestDriver.likeExpected(
 				  "--o"
 				+ "xxe"
-				+ "o-o",
+				+ "o--",
 				(field, dec) -> ThreeInARowPlayer.findFinishingPosition(field, PlayerID.Player1, dec));		
 		assertTrue("Part 2", success);
 		
 		success = TestDriver.likeExpected(
-				  "o-o"
+				  "--o"
 				+ "exx"
 				+ "o--", 
 				(field, dec) -> ThreeInARowPlayer.findFinishingPosition(field, PlayerID.Player1, dec));		

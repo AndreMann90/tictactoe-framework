@@ -9,7 +9,8 @@ import aiStagesTest.ThreeInARowPlayerTest;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    RandomPlayerTest.class,
-   ThreeInARowPlayerTest.class
+   ThreeInARowPlayerTest.class,
+   TestDriverTest.class
 })
 public class PlayerTestSuite {
 
