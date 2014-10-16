@@ -68,7 +68,7 @@ public class Positions {
 		return pos % 2 == 1;
 	}
 	
-	public static boolean areNeighbours(final FieldPosition pos1, final FieldPosition pos2) {
+	public static boolean areNeighbors(final FieldPosition pos1, final FieldPosition pos2) {
 		final int diff = Math.abs(pos1.getPosition() - pos2.getPosition());
 		return diff == 1 || isCenter(pos1) || isCenter(pos2);
 	}
@@ -107,5 +107,13 @@ public class Positions {
 	
 	public static FieldPosition randomCorner() {
 		return randomCorner(new Random());	
+	}
+	
+	public static FieldPosition randomPosBetweenCorners(Random r) {
+		return rotateRight(randomCorner(r), 1);		
+	}
+	
+	public static FieldPosition randomPosBetweenCorners() {
+		return randomPosBetweenCorners(new Random());	
 	}
 }

@@ -74,9 +74,12 @@ public class ExpertForRound3 implements ExpertForRound {
 			/*
 			 * x-o
 			 * ---
-			 * e-e TODO opposite from opponent does it as well (but more possibilities)
+			 * e-e 
 			 */
-			decisioner.putPossibility(Positions.opposite(myCorner), weight);
+			final FieldPosition pos = r.nextBoolean() ? Positions
+					.opposite(myCorner) : Positions.opposite(myCorner);
+					
+			decisioner.putPossibility(pos, weight);
 			
 		} else { // opponent made move between corners
 			
@@ -99,7 +102,7 @@ public class ExpertForRound3 implements ExpertForRound {
 				position = FieldPosition.Center;
 			} else {
 				//Next line, case 1 and case 2 differ:
-				final int rotateBy = Positions.areNeighbours(myCorner, oponnent) ? 1 : 3;
+				final int rotateBy = Positions.areNeighbors(myCorner, oponnent) ? 1 : 3;
 				final boolean clockwise = Positions.rotateRight(myCorner, rotateBy).equals(oponnent) == false;
 				
 				position = Positions.rotate(clockwise, myCorner, 2);
@@ -134,16 +137,39 @@ public class ExpertForRound3 implements ExpertForRound {
 			
 			decisioner.putPossibility(Positions.rotateRight(myMove, rotateBy), weight);
 			
-		} else if(Positions.isBetweenCorners(oponnent)) {
+		} else if(Positions.areNeighbors(myMove, oponnent) == false) {
 			/*
+			 * case 1:
 			 * -xe
 			 * --o
 			 * ---
 			 */
-			final boolean clockwise = Positions.rotateRight(myMove, 2).equals(oponnent);
-			decisioner.putPossibility(Positions.rotate(clockwise, myMove, 1), weight);
+			/*
+			 * case 2:
+			 * -xe
+			 * ---
+			 * --o
+			 */
+			
+			//Next line, case 1 and case 2 differ:
+			final int rotateBy = Positions.isBetweenCorners(oponnent) ? 2 : 3;
+			final boolean clockwise = Positions.rotateRight(myMove, rotateBy)
+					.equals(oponnent);
+			decisioner.putPossibility(Positions.rotate(clockwise, myMove, 1), weight);			
+		} else { //else there are neighbors but center is free
+			/*
+			 * -xo
+			 * --e
+			 * e-e 
+			 */
+			final boolean clockwise = Positions.rotateRight(myMove, 1)
+					.equals(oponnent);
+			int rotateBy = 2 + r.nextInt(3);
+			if(rotateBy == 4) {
+				rotateBy++;
+			}
+			decisioner.putPossibility(Positions.rotate(clockwise, myMove, rotateBy), weight);	
 		}
-		//TODO two possibilties left
 	}
 
 }
