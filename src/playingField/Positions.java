@@ -58,9 +58,28 @@ public class Positions {
 		return pos != 8 && pos % 2 == 0;
 	}
 	
+	public static int countPositionsInCorner(final FieldPosition[] positions) {
+		int count = 0;
+		for(int i = 0; i < positions.length; i++) {
+			if(isCorner(positions[i])) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
 	public static boolean isCenter(final FieldPosition position) {
 		final int pos = position.getPosition();
 		return pos == 8;
+	}
+	
+	public static boolean isOneOfThemCenter(final FieldPosition[] positions) {
+		for(int i = 0; i < positions.length; i++) {
+			if(isCenter(positions[i])) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public static boolean isBetweenCorners(final FieldPosition position) {

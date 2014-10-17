@@ -16,7 +16,7 @@ public class PlayingField {
 
 	
 	public char[][] getField(char playerOne, char playerTwo, char noPlayer) {
-		char[] symbols = {noPlayer, playerOne, playerTwo};
+		final char[] symbols = {noPlayer, playerOne, playerTwo};
 		
 		char[][] resultingField = new char[3][3];
 		for(int x = 0; x < 3; x++) {
@@ -25,6 +25,13 @@ public class PlayingField {
 			}
 		}
 		return resultingField;
+	}
+	
+	@Override
+	public String toString() {
+		char[][] field = getField('x', 'o', '-');
+		return String.valueOf(field[0]) + String.valueOf(field[1]) 
+				+ String.valueOf(field[2]);		
 	}
 
 	public int getIdAt(Point position) {
