@@ -34,7 +34,7 @@ public class ExpertForRound4 implements ExpertForRound {
 		
 		FieldPosition makeHere = FieldPosition.Empty;
 
-		for (int i = 0; i < fieldSpecifications.length; i++) {
+		for (int i = 0; i < fieldSpecifications.length && makeHere == FieldPosition.Empty; i++) {
 			makeHere = FieldMatcher.fieldsMatch(fieldSpecifications[i],
 					field.toString(), FieldMatcher.DEFAULT_MATCH);
 		}

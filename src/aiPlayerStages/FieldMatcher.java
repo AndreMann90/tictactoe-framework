@@ -22,7 +22,19 @@ public class FieldMatcher {
 	
 	/**
 	 * Checks whether the two fields matches. If so, returns the 
-	 * specified, expected position
+	 * specified, expected position. \n
+	 * example:\n
+	 * xo- \n
+	 * -o- \n
+	 * -x- \n
+	 * matches: \n
+	 * --x \n
+	 * xoo \n
+	 * --- \n
+	 * as well as: \n
+	 * x-- \n
+	 * oox \n
+	 * --- \n 
 	 * 
 	 * @param specifiedField
 	 *            field in String representation \n
@@ -54,37 +66,69 @@ public class FieldMatcher {
 			
 			/*
 			 * center matches, check the ring around
+			 * 
+			 * -definitions-
+			 * 
+			 * ring:
+			 * 012
+			 * 7 3
+			 * 654
+			 * 
+			 * ring(1x rotated):
+			 * 670
+			 * 5 1
+			 * 432
+			 * 
+			 * ring(mirrored):
+			 * 076
+			 * 1 5
+			 * 234
+			 * 
+			 * 
+			 * -idea-
+			 * 0123456701234567 (actualDoubledRing)
+			 * 01234567         (specifiedRing)
+			 *   01234567       (specifiedRing, 1x rotated)
+			 *     01234567     (specifiedRing, 2x rotated)
+			 *       01234567   (specifiedRing, 3x rotated)
+			 * 
+			 * 0123456701234567 (actualDoubledRing)
+			 * 07654321         (mirroredSpecifiedRing)
+			 *   07654321       (mirroredSpecifiedRing, 1x rotated)
+			 *     07654321     (mirroredSpecifiedRing, 2x rotated)
+			 *       07654321   (mirroredSpecifiedRing, 3x rotated)
+			 * 
 			 */
-			boolean fieldsMatch = fieldsEqual(specifiedField, actualField, matcher);
+			StringBuilder specifiedRing = ringFromField(specifiedField);
+			StringBuilder actualDoubledRing = doubleRing(ringFromField(actualField));
 			
-			int rotation = 0;
+			int rotated = 0;
 			boolean mirrored = false;
 			
-			if(fieldsMatch == false) {
-
-				StringBuilder field1 = rotateFieldClockwise(specifiedField);
-				StringBuilder field2 = rotateFieldClockwise(actualField);
-				rotation++;
+			boolean matchFound = false;
+			
+			while(rotated < 4 && matchFound == false) {
 				
-				fieldsMatch = fieldsEqual(field1, field2, matcher);
+				final int start = (2*rotated);
+				final int end = start + 8;
+				matchFound = fieldsEqual(specifiedRing, 
+						actualDoubledRing.subSequence(start, end),
+						matcher);
 				
-				while (fieldsMatch == false && rotation < 3) {
-					field1 = rotateFieldClockwise(field1);
-					field2 = rotateFieldClockwise(field2);
-					rotation++;
-
-					fieldsMatch = fieldsEqual(field1, field2, matcher);
+				if(matchFound == false) {
+					rotated++; 
 				}
-				
-				if(fieldsMatch == false) {
+				if(rotated == 4 && mirrored == false) {
+					mirrorRing(specifiedRing);
 					mirrored = true;
-					//mirror! 
-					//TODO implement rest
+					rotated = 0;					
 				}
 			}
 			
+			if(matchFound) {
+				//TODO find expected field
+			}
 			
-
 		}		
 
 		return result;
@@ -105,44 +149,35 @@ public class FieldMatcher {
 		return true;
 	}
 	
-	private static StringBuilder rotateFieldClockwise(String s) {
+	private static StringBuilder ringFromField(String s) {
 		/*
 		 * from:
 		 * 012
 		 * 345
 		 * 678
 		 * 
-		 * to:
-		 * 630
-		 * 7 1
-		 * 852
+		 * to (clockwise ring):
+		 * 012
+		 * 3 5
+		 * 678
 		 * 
-		 * node: the center is left out! (because it's invariant)
+		 * node: the center is left out, because it's invariant
 		 */
-		return new StringBuilder(10).append(s.charAt(6))
-				.append(s.charAt(3))
-				.append(s, 0, 2)
+		return new StringBuilder(8).append(s, 0, 2)
 				.append(s.charAt(5))
 				.append(s.charAt(8))
-				.append(s.charAt(7));		
+				.append(s.charAt(7))
+				.append(s.charAt(6))
+				.append(s.charAt(3));		
 	}
 	
-	private static StringBuilder rotateFieldClockwise(StringBuilder s) {
-		/*
-		 * from:
-		 * 012
-		 * 7 3
-		 * 654
-		 * 
-		 * to:
-		 * 670
-		 * 5 1
-		 * 432
-		 * 
-		 *  note: delete from 8 till 9 because the insertion before 
-		 *  increased the length of s by 2 
-		 */
-		return s.insert(0, s, 6, 7).delete(8, 9); 		
+	private static StringBuilder doubleRing(StringBuilder ring) {
+		return new StringBuilder(16).append(ring).append(ring); 		
+	}
+	
+	private static StringBuilder mirrorRing(StringBuilder ring) {
+		final String reversedPart = ring.reverse().toString(); //76543210
+		return ring.replace(1, ring.length(), reversedPart); //07654321
 	}
 	
 }
