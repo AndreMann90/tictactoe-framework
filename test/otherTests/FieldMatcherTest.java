@@ -13,7 +13,7 @@ public class FieldMatcherTest {
 	public void matchingTestNoRotationNoMirror() {
 		FieldPosition result = FieldMatcher.fieldsMatch(
 				  "-xo"
-				+ "?--"
+				+ "?-e"
 				+ "-ox", 
 				
 				  "-xo"
@@ -22,13 +22,15 @@ public class FieldMatcherTest {
 				FieldMatcher.DEFAULT_MATCH);
 		
 		assertNotEquals("should match, but does not", result, FieldPosition.Empty);
+
+		assertEquals("matches, but result wrong", result, FieldPosition.Right);
 	}
 
 	@Test
 	public void matchingTestOneRotationNoMirror() {
 		FieldPosition result = FieldMatcher.fieldsMatch(
 				  "-xo"
-				+ "?--"
+				+ "?e-"
 				+ "-ox", 
 				
 				  "o-x"
@@ -37,6 +39,8 @@ public class FieldMatcherTest {
 				FieldMatcher.DEFAULT_MATCH);
 		
 		assertNotEquals("should match, but does not", result, FieldPosition.Empty);
+
+		assertEquals("matches, but result wrong", result, FieldPosition.Center);
 	}
 
 	@Test
@@ -44,7 +48,7 @@ public class FieldMatcherTest {
 		FieldPosition result = FieldMatcher.fieldsMatch(
 				  "-xo"
 				+ "?--"
-				+ "-ox", 
+				+ "eox", 
 				
 				  "-x-"
 				+ "o-x"
@@ -52,6 +56,8 @@ public class FieldMatcherTest {
 				FieldMatcher.DEFAULT_MATCH);
 		
 		assertNotEquals("should match, but does not", result, FieldPosition.Empty);
+
+		assertEquals("matches, but result wrong", result, FieldPosition.TopLeft);
 	}
 
 	@Test
@@ -59,7 +65,7 @@ public class FieldMatcherTest {
 		FieldPosition result = FieldMatcher.fieldsMatch(
 				  "-xo"
 				+ "?--"
-				+ "-ox", 
+				+ "eox", 
 				
 				  "-x-"
 				+ "x-o"
@@ -67,13 +73,15 @@ public class FieldMatcherTest {
 				FieldMatcher.DEFAULT_MATCH);
 		
 		assertNotEquals("should match, but does not", result, FieldPosition.Empty);
+
+		assertEquals("matches, but result wrong", result, FieldPosition.TopRight);
 	}
 
 	@Test
 	public void matchingTestOneRotationMirror() {
 		FieldPosition result = FieldMatcher.fieldsMatch(
 				  "-xo"
-				+ "?--"
+				+ "?e-"
 				+ "-ox", 
 				
 				  "-ox"
@@ -82,13 +90,15 @@ public class FieldMatcherTest {
 				FieldMatcher.DEFAULT_MATCH);
 		
 		assertNotEquals("should match, but does not", result, FieldPosition.Empty);
+
+		assertEquals("matches, but result wrong", result, FieldPosition.Center);
 	}
 
 	@Test
 	public void matchingTestThreeRotationMirror() {
 		FieldPosition result = FieldMatcher.fieldsMatch(
 				  "-xo"
-				+ "?--"
+				+ "?-e"
 				+ "-ox", 
 				
 				  "ox-"
@@ -97,6 +107,53 @@ public class FieldMatcherTest {
 				FieldMatcher.DEFAULT_MATCH);
 		
 		assertNotEquals("should match, but does not", result, FieldPosition.Empty);
+
+		assertEquals("matches, but result wrong", result, FieldPosition.Left);
+	}
+
+	@Test
+	public void matchingTestNoMatch1() {
+		FieldPosition result = FieldMatcher.fieldsMatch(
+				  "-xo"
+				+ "?xe"
+				+ "-ox", 
+				
+				  "ox-"
+				+ "--x"
+				+ "xo-", 
+				FieldMatcher.DEFAULT_MATCH);
+		
+		assertEquals("match, but should not", result, FieldPosition.Empty);
+	}
+
+	@Test
+	public void matchingTestNoMatch2() {
+		FieldPosition result = FieldMatcher.fieldsMatch(
+				  "-xo"
+				+ "---"
+				+ "-ox", 
+				
+				  "ox-"
+				+ "--x"
+				+ "xo-", 
+				FieldMatcher.DEFAULT_MATCH);
+		
+		assertEquals("match, but should not", result, FieldPosition.Empty);
+	}
+
+	@Test
+	public void matchingTestNoMatch3() {
+		FieldPosition result = FieldMatcher.fieldsMatch(
+				  "-xo"
+				+ "x?-"
+				+ "x-x", 
+				
+				  "ox-"
+				+ "--x"
+				+ "xo-", 
+				FieldMatcher.DEFAULT_MATCH);
+		
+		assertEquals("match, but should not", result, FieldPosition.Empty);
 	}
 
 }

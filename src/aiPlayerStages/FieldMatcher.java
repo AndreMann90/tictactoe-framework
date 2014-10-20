@@ -1,6 +1,12 @@
 package aiPlayerStages;
 
+import java.awt.Point;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
 import playingField.FieldPosition;
+import playingField.Positions;
 
 public class FieldMatcher {
 	
@@ -127,8 +133,30 @@ public class FieldMatcher {
 			}
 			
 			if(matchFound) {
-				//TODO find expected field
-				result = FieldPosition.Center; // Dummy for testing: match
+				List<Point> expected = new LinkedList<Point>();
+
+				for (int i = 0; i < specifiedField.length(); i++) {
+					if (specifiedField.charAt(i) == 'e') {
+						Point curPos = new Point(i / 3, i % 3);
+						expected.add(curPos);
+					}
+				}
+				
+				if(expected.size() > 0) {
+					Random r = new Random();
+					
+					final int thisPoint = r.nextInt(expected.size());
+					
+					result = Positions.fromPointToType(expected.get(thisPoint));
+					
+					if(mirrored) {
+						result = Positions.mirror(result);
+					}
+
+					if(rotated > 0) {
+						result = Positions.rotateRight(result, 2 * rotated);
+					}
+				}
 			}
 			
 		}		

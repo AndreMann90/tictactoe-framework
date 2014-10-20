@@ -116,6 +116,15 @@ public class Positions {
 		return rotateRight(from, 4);
 	}
 	
+	public static FieldPosition mirror (final FieldPosition from) {
+		if(from.equals(FieldPosition.Center)) {
+			return FieldPosition.Center;
+		} else {
+			final int rep = from.getPosition();
+			return FieldPosition.fromInt((8 - rep) % 8);
+		}		
+	}
+	
 	public static FieldPosition randomCorner(Random r) {
 		if(r == null) {
 			r = new Random();
