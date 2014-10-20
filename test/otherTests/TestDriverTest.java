@@ -1,8 +1,9 @@
-package testUtil;
+package otherTests;
 
 
 import org.junit.Test;
 
+import testUtil.TestDriver;
 import exceptions.InvalidSyntaxException;
 
 public class TestDriverTest {

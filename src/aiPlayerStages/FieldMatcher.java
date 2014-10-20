@@ -45,9 +45,10 @@ public class FieldMatcher {
 	 * @return the expected position ('e') if the fields match, Empty position 
 	 *            otherwise
 	 */
-	static FieldPosition fieldsMatch(String specifiedField, String actualField, PositionMatch matcher) {
+	public static FieldPosition fieldsMatch(String specifiedField, 
+			String actualField, PositionMatch matcher) {
 
-		if (specifiedField.length() != 9) {
+		if (specifiedField.length() != 9 || actualField.length() != 9) {
 			return FieldPosition.Empty;
 		}
 		
@@ -75,9 +76,9 @@ public class FieldMatcher {
 			 * 654
 			 * 
 			 * ring(1x rotated):
-			 * 670
-			 * 5 1
-			 * 432
+			 * 234
+			 * 1 5
+			 * 076
 			 * 
 			 * ring(mirrored):
 			 * 076
@@ -119,7 +120,7 @@ public class FieldMatcher {
 					rotated++; 
 				}
 				if(rotated == 4 && mirrored == false) {
-					mirrorRing(specifiedRing);
+					specifiedRing = mirrorRing(specifiedRing);
 					mirrored = true;
 					rotated = 0;					
 				}
@@ -127,6 +128,7 @@ public class FieldMatcher {
 			
 			if(matchFound) {
 				//TODO find expected field
+				result = FieldPosition.Center; // Dummy for testing: match
 			}
 			
 		}		
@@ -134,7 +136,9 @@ public class FieldMatcher {
 		return result;
 	}
 	
-	private static boolean fieldsEqual(CharSequence one, CharSequence two, PositionMatch matcher) {
+	private static boolean fieldsEqual(CharSequence one, CharSequence two, 
+			PositionMatch matcher) {
+		
 		if(one.length() != two.length()) {
 			return false;
 		}
@@ -163,7 +167,7 @@ public class FieldMatcher {
 		 * 
 		 * node: the center is left out, because it's invariant
 		 */
-		return new StringBuilder(8).append(s, 0, 2)
+		return new StringBuilder(8).append(s, 0, 3)
 				.append(s.charAt(5))
 				.append(s.charAt(8))
 				.append(s.charAt(7))
@@ -175,9 +179,12 @@ public class FieldMatcher {
 		return new StringBuilder(16).append(ring).append(ring); 		
 	}
 	
+	
 	private static StringBuilder mirrorRing(StringBuilder ring) {
-		final String reversedPart = ring.reverse().toString(); //76543210
-		return ring.replace(1, ring.length(), reversedPart); //07654321
+		final char zero = ring.charAt(0);
+		ring.reverse();
+		return new StringBuilder(8).append(zero).
+				append(ring, 0, ring.length()-1); //07654321
 	}
 	
 }
