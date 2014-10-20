@@ -89,7 +89,11 @@ public class Positions {
 	
 	public static boolean areNeighbors(final FieldPosition pos1, final FieldPosition pos2) {
 		final int diff = Math.abs(pos1.getPosition() - pos2.getPosition());
-		return diff == 1 || isCenter(pos1) || isCenter(pos2);
+		return diff == 1 || isCenter(pos1) || isCenter(pos2) || diff == 7;
+		/*                          o--      x--
+		 * diff == 7 for this case: x-- and: o--
+		 *                          ---      ---
+		 */
 	}
 	
 	public static FieldPosition rotate (final boolean clockwise, final FieldPosition from, final int by) {
@@ -109,7 +113,7 @@ public class Positions {
 	}
 	
 	public static FieldPosition rotateLeft (final FieldPosition from, final int by) {
-		return rotateRight(from, (-1 * by));
+		return rotateRight(from, (8 - by));
 	}
 	
 	public static FieldPosition opposite (final FieldPosition from) {

@@ -33,7 +33,8 @@ public class ExpertForRound2 implements ExpertForRound {
 				decisioner.putPossibility(FieldPosition.Center, weight);
 			} else {
 				final boolean clockwise = r.nextBoolean();
-				Positions.rotate(clockwise, firstMove, 1);
+				decisioner.putPossibility(Positions
+						.rotate(clockwise, firstMove, 1), weight);
 			}
 		}
 	}

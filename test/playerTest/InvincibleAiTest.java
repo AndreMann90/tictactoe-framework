@@ -11,6 +11,7 @@ import org.junit.Test;
 import players.PlayerProperties;
 import players.PlayerProperties.PlayerBuilder;
 import tictactoeGame.Game;
+import tictactoeGame.GameProperty;
 import tictactoeGame.Move;
 
 public class InvincibleAiTest {
@@ -21,6 +22,9 @@ public class InvincibleAiTest {
 				.create();
 		PlayerProperties playerTwo = new PlayerBuilder('o').setHuman(false)
 				.create();
+		
+		GameProperty gameProperty = new GameProperty.Builder()
+			.setFirstPlayerBegins().create();
 
 		Game game = new Game(display);
 
@@ -33,7 +37,7 @@ public class InvincibleAiTest {
 		 * AI is not invincible
 		 */
 		for (int i = 0; i < max; i++) {
-			game.startNewGame(playerOne, playerTwo);
+			game.startNewGame(gameProperty, playerOne, playerTwo);
 			assertFalse(hasAnyoneEverWonTheGame);
 		}
 
@@ -44,10 +48,20 @@ public class InvincibleAiTest {
 
 		@Override
 		public void displayField(char[][] field) {
+			for(int x = 0; x < 3; x++) {
+				for(int y = 0; y < 3; y++) {
+					System.out.print(field[x][y]);
+					if(y < 2) {
+						System.out.print("|");
+					}
+				}
+				System.out.println();
+			}
 		}
 
 		@Override
 		public void nextRoundHasBegun(int currentRound) {
+			System.out.println("-- " + currentRound + " --");
 		}
 
 		@Override

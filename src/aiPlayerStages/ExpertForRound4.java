@@ -34,9 +34,10 @@ public class ExpertForRound4 implements ExpertForRound {
 		
 		FieldPosition makeHere = FieldPosition.Empty;
 
+		final String actualField = field.toString();
 		for (int i = 0; i < fieldSpecifications.length && makeHere == FieldPosition.Empty; i++) {
 			makeHere = FieldMatcher.fieldsMatch(fieldSpecifications[i],
-					field.toString(), FieldMatcher.DEFAULT_MATCH);
+					actualField, FieldMatcher.DEFAULT_MATCH);
 		}
 		
 		if(makeHere != FieldPosition.Empty) {
@@ -58,8 +59,8 @@ public class ExpertForRound4 implements ExpertForRound {
 	private String[] specificationOneCornerOneCenterPostionsOfOpponent() {
 		String[] fieldSpecifications = {
 				  "x-e"
-				+ "-xe"
-				+ "eeo"
+				+ "-x-"
+				+ "e-o"
 		};
 		return fieldSpecifications;
 	}
@@ -68,7 +69,15 @@ public class ExpertForRound4 implements ExpertForRound {
 		String[] fieldSpecifications = {
 				  "xee"
 				+ "-ox"
-				+ "-ee"
+				+ "-ee",
+				
+				  "--x"
+				+ "-e-"
+				+ "?x?",
+				
+				  "xxo"
+				+ "--e"
+				+ "---"
 		};
 		return fieldSpecifications;
 	}
