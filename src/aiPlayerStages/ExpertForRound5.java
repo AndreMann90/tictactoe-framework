@@ -16,6 +16,9 @@ public class ExpertForRound5 implements ExpertForRound {
 		FieldPosition[] myMoves = { field.getPosFromHistory(1),
 				field.getPosFromHistory(3) };
 		
+		/*
+		 * Limit the number of specifications
+		 */
 		final int cornerPostions = Positions.countPositionsInCorner(myMoves);
 		
 		if(cornerPostions == 2) {
@@ -34,6 +37,10 @@ public class ExpertForRound5 implements ExpertForRound {
 			}
 		}
 		
+		
+		/*
+		 * Try all the specifications
+		 */
 		FieldPosition makeHere = FieldPosition.Empty;
 
 		final String actualField = field.toString();
@@ -85,7 +92,7 @@ public class ExpertForRound5 implements ExpertForRound {
 				+ "?ox"
 				+ "?--",
 				
-				  "xo?"
+				  "x??"
 				+ "e-x"
 				+ "--?",
 				
@@ -104,7 +111,15 @@ public class ExpertForRound5 implements ExpertForRound {
 				
 				  "ex-"
 				+ "x??"
-				+ "-?-"
+				+ "-?-",
+				
+				  "ox-"
+				+ "xe?"
+				+ "-?-",
+				
+				  "-xo"
+				+ "xee"
+				+ "eo-"
 		};
 		return fieldSpecifications;
 	}

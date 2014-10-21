@@ -16,6 +16,9 @@ public class ExpertForRound4 implements ExpertForRound {
 		FieldPosition[] opponentMoves = { field.getPosFromHistory(1),
 				field.getPosFromHistory(3) };
 		
+		/*
+		 * Limit the number of specifications
+		 */
 		final int cornerPostionsOfOpponent = Positions.countPositionsInCorner(opponentMoves);
 		
 		if(cornerPostionsOfOpponent == 2) {
@@ -32,6 +35,10 @@ public class ExpertForRound4 implements ExpertForRound {
 			} //else needs not to be specified
 		}
 		
+		
+		/*
+		 * Try all the specifications
+		 */
 		FieldPosition makeHere = FieldPosition.Empty;
 
 		final String actualField = field.toString();

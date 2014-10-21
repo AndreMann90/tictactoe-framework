@@ -17,6 +17,9 @@ public class ExpertForRound6 implements ExpertForRound {
 				field.getPosFromHistory(3),
 				field.getPosFromHistory(5) };
 		
+		/*
+		 * Limit the number of specifications
+		 */
 		final int cornerPostionsOfOpponent = 
 				Positions.countPositionsInCorner(opponentMoves);
 		final boolean centerOwnedByOpponent = Positions.isOneOfThemCenter(opponentMoves);
@@ -25,6 +28,10 @@ public class ExpertForRound6 implements ExpertForRound {
 			fieldSpecifications = specificationTwoBetweenCornerOneCornerPostionsOfOpponent();
 		}
 		
+		
+		/*
+		 * Try all the specifications
+		 */
 		FieldPosition makeHere = FieldPosition.Empty;
 
 		final String actualField = field.toString();
