@@ -12,19 +12,19 @@ import playingField.FieldPosition;
 import tictactoeGame.Move;
 
 public class DisplayConsole implements Display {
-	
+
 	private Scanner in;
-	
+
 	public DisplayConsole() {
 		in = new Scanner(System.in);
 	}
 
 	@Override
 	public void displayField(char[][] field) {
-		for(int x = 0; x < 3; x++) {
-			for(int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			for (int y = 0; y < 3; y++) {
 				System.out.print(field[x][y]);
-				if(y < 2) {
+				if (y < 2) {
 					System.out.print("|");
 				}
 			}
@@ -34,20 +34,22 @@ public class DisplayConsole implements Display {
 
 	@Override
 	public void waitForHumanPlayersMove(Move move, PlayerProperties player) {
-		System.out.println(player.name + ", please make your Move (Snail shell-coordinates: 0-8)");
+		System.out.println(player.name
+				+ ", please make your Move (Snail shell-coordinates: 0-8)");
 
-	    
 		boolean validMove = false;
 		do {
 			try {
-				int chosen = in.nextInt();
+				int chosen = ConsoleInputHelper.readIntegerInput(0, 8, in,
+						"Invalid input. Please use Snail shell-coordinates: 0-8");
 				FieldPosition chosenField = FieldPosition.fromInt(chosen);
 				move.makeMove(chosenField);
 				validMove = true;
 			} catch (InvalidMoveException e) {
-				System.out.println(player.name + ", this was not a valid move. Try again.");				
+				System.out.println(player.name
+						+ ", this was not a valid move. Try again.");
 			}
-		} while(validMove == false);
+		} while (validMove == false);
 	}
 
 	@Override
@@ -68,8 +70,9 @@ public class DisplayConsole implements Display {
 	@Override
 	public void aiFinishedMove(PlayerProperties player, Optional<Point> decision) {
 		System.out.print(player.name + "'s turn");
-		if(decision.isPresent()) {
-			System.out.println(": (" + decision.get().x + "," + decision.get().y + ")");
+		if (decision.isPresent()) {
+			System.out.println(": (" + decision.get().x + ","
+					+ decision.get().y + ")");
 		} else {
 			System.out.println(": InvalidMove");
 		}
@@ -79,6 +82,5 @@ public class DisplayConsole implements Display {
 	public void nextRoundHasBegun(int currentRound) {
 		System.out.println("Round No. " + currentRound);
 	}
-
 
 }
