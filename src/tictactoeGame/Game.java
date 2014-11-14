@@ -28,6 +28,26 @@ public class Game {
 
 	public void startNewGame(GameProperty gameproperty, PlayerProperties firstPlayer, 
 			PlayerProperties secondPlayer) {
+		
+		/*
+		 * swap players iff second player begins 
+		 * because in the Game loop playerOne always begins
+		 */
+		final boolean secondPlayerBegins;
+		if(gameproperty.thisPlayerBegins.equals(PlayerID.NoPlayer)) {
+			Random r = new Random();
+			secondPlayerBegins = r.nextBoolean();
+		} else if(gameproperty.thisPlayerBegins.equals(PlayerID.Player2)) {
+			secondPlayerBegins = true;
+		} else {
+			secondPlayerBegins = false;
+		}
+		
+		if(secondPlayerBegins) { //swap
+			PlayerProperties temp = firstPlayer;
+			firstPlayer = secondPlayer;
+			secondPlayer = temp;
+		}
 	
 		//Create a fresh playing field
 		field = new PlayingField();
@@ -49,28 +69,7 @@ public class Game {
 		} else {
 			playerTwo = new AIplayer(PlayerID.Player2, secondPlayer, display, field);
 		}
-		
-		/*
-		 * swap players iff second player begins 
-		 * because in the Game loop playerOne always begins
-		 */
-		final boolean secondPlayerBegins;
-		if(gameproperty.thisPlayerBegins.equals(PlayerID.NoPlayer)) {
-			Random r = new Random();
-			secondPlayerBegins = r.nextBoolean();
-		} else if(gameproperty.thisPlayerBegins.equals(PlayerID.Player2)) {
-			secondPlayerBegins = true;
-		} else {
-			secondPlayerBegins = false;
-		}
-		
-		if(secondPlayerBegins) { //swap
-			Player temp = playerOne;
-			playerOne = playerTwo;
-			playerTwo = temp;
-		}
-		
-		
+				
 		
 		//Game loop
 		boolean hasWinner = false;
