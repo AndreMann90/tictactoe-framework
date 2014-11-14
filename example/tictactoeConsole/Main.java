@@ -22,16 +22,19 @@ public class Main {
 		int numHumans = ConsoleInputHelper.readIntegerInput(0, 2, in,
 				"Invalid input. How many human player? (0-2)");
 
-		PlayerBuilder playerOne = new PlayerBuilder('x').setHuman(false)
-				.setName("Player 1");
-		PlayerBuilder playerTwo = new PlayerBuilder('o').setHuman(false)
-				.setName("Player 2");
-
-		if (numHumans > 0) {
-			playerOne.setHuman(true);
+		PlayerBuilder playerOne = new PlayerBuilder('x').setHuman(true)
+				.setName("Player \"X\"");
+		PlayerBuilder playerTwo = new PlayerBuilder('o').setHuman(true)
+				.setName("Player \"O\"");
+	
+		if (numHumans == 0) {
+			System.out.println("Choose AI strength for Player \"X\"");
+			setAiStrength(playerOne, in);
 		}
-		if (numHumans > 1) {
-			playerTwo.setHuman(true);
+		
+		if (numHumans < 2) {
+			System.out.println("Choose AI strength for Player \"O\"");
+			setAiStrength(playerTwo, in);			
 		}
 
 		
@@ -44,6 +47,25 @@ public class Main {
 		} while (in.nextLine().equals("e") == false);
 
 		in.close();
+	}
+	
+	private static void setAiStrength (PlayerBuilder ai, Scanner in) {
+		System.out.println("-Invincible AI (1)");
+		System.out.println("-Almost flawless AI (2)");
+		System.out.println("-Competitive AI (3)");
+		System.out.println("-Novice AI (4)");
+		
+		int aiStrength = ConsoleInputHelper.readIntegerInput(1, 4, in,
+				"Invalid input. Choose between 1 and 4");
+
+		switch (aiStrength) {
+		
+		case 1: ai.setInvincibleAI(); break;
+		case 2: ai.setAlmostFlawlessAI(); break;
+		case 3: ai.setCompetitiveAI(); break;
+		case 4: ai.setNoviceAI(); break;
+		
+		}
 	}
 
 }
