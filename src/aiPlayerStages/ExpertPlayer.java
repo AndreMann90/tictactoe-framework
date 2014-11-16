@@ -11,7 +11,8 @@ public class ExpertPlayer {
 		new ExpertForRound3(),
 		new ExpertForRound4(),
 		new ExpertForRound5(),
-		new ExpertForRound6()
+		new ExpertForRound6(),
+		new ExpertForRound7()
 		};
 
 	public static void useKnowlegdeToFindPosition(PlayingField field,

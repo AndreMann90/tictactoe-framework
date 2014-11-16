@@ -5,7 +5,7 @@ import playingField.PlayingField;
 import playingField.Positions;
 import aiPlayerStages.ExpertPlayer.ExpertForRound;
 
-public class ExpertForRound6 implements ExpertForRound {
+public class ExpertForRound7 implements ExpertForRound {
 
 	@Override
 	public void useKnowledge(PlayingField field, Decisioner decisioner,
@@ -13,23 +13,19 @@ public class ExpertForRound6 implements ExpertForRound {
 		
 		String[] fieldSpecifications = {};
 		
-		FieldPosition[] opponentMoves = { field.getPosFromHistory(1),
+		FieldPosition[] myMoves = { field.getPosFromHistory(1),
 				field.getPosFromHistory(3),
 				field.getPosFromHistory(5) };
 		
 		/*
 		 * Limit the number of specifications
 		 */
-		final int cornerPostionsOfOpponent = 
-				Positions.countPositionsInCorner(opponentMoves);
-		final boolean centerOwnedByOpponent = Positions.isOneOfThemCenter(opponentMoves);
+		final int cornerPositions = 
+				Positions.countPositionsInCorner(myMoves);
+		final boolean centerOwned = Positions.isOneOfThemCenter(myMoves);
 		
-		if(cornerPostionsOfOpponent == 1 && centerOwnedByOpponent == false) {
+		if(cornerPositions == 1 && centerOwned == false) {
 			fieldSpecifications = specificationTwoBetweenCornerOneCornerPostionsOfOpponent();
-		} else if(cornerPostionsOfOpponent == 0 && centerOwnedByOpponent == true) {
-			fieldSpecifications = specificationTwoBetweenCornerCenterPostionsOfOpponent();
-		} else if(cornerPostionsOfOpponent == 3) {
-			fieldSpecifications = specificationThreeCornerPostionsOfOpponent();
 		} else {
 			//no specifications to try
 			return;
@@ -56,31 +52,9 @@ public class ExpertForRound6 implements ExpertForRound {
 	
 	private String[] specificationTwoBetweenCornerOneCornerPostionsOfOpponent() {
 		String[] fieldSpecifications = {
-				  "-?x"
-				+ "x??"
-				+ "ex-",
-				
-				  "??x"
-				+ "xe?"
-				+ "ox?"
-		};
-		return fieldSpecifications;
-	}
-	
-	private String[] specificationTwoBetweenCornerCenterPostionsOfOpponent() {
-		String[] fieldSpecifications = {
-				  "-oe"
-				+ "xxo"
-				+ "-x-"
-		};
-		return fieldSpecifications;
-	}
-	
-	private String[] specificationThreeCornerPostionsOfOpponent() {
-		String[] fieldSpecifications = {
-				  "xox"
-				+ "-eo"
-				+ "--x"
+				  "-ox"
+				+ "xoo"
+				+ "ex-"
 		};
 		return fieldSpecifications;
 	}
