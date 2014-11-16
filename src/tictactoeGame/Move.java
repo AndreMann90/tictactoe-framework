@@ -26,21 +26,19 @@ public final class Move {
 	}
 	
 	public void makeMove(FieldPosition position) throws InvalidMoveException {
-		checkWetherMoveWasMade();
-		field.makeMove(Positions.fromTypeToPoint(position), position, id);
+		makeMove(Positions.fromTypeToPoint(position), position);
 	}
 	
 	public void makeMove(Point position) throws InvalidMoveException {
-		checkWetherMoveWasMade();
-		field.makeMove(position, Positions.fromPointToType(position), id);
+		makeMove(position, Positions.fromPointToType(position));
 	}
 	
-	private void checkWetherMoveWasMade() throws InvalidMoveException {
-		if(moveMade == false) {
-			moveMade = true;
-		} else {
+	private void makeMove(Point ppos, FieldPosition fpos) throws InvalidMoveException {
+		if(moveMade) {
 			throw new InvalidMoveException();
 		}
+		field.makeMove(ppos, fpos, id);
+		moveMade = true;
 	}
 
 }
